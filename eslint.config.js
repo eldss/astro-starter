@@ -1,32 +1,44 @@
-import eslint from "@eslint/js";
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tsparser from "@typescript-eslint/parser";
-import astroPlugin from "eslint-plugin-astro";
+import { FlatCompat } from "@eslint/eslintrc";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
 
 export default [
-  eslint.configs.recommended,
+  // Ignore patterns for files that shouldn't be linted
   {
-    files: ["**/*.ts", "**/*.tsx"],
-    plugins: {
-      "@typescript-eslint": tseslint,
-    },
-    languageOptions: {
-      parser: tsparser,
-    },
-    rules: {
-      ...tseslint.configs.recommended.rules,
-    },
+    ignores: [
+      // Ignore auto-generated Astro files
+      ".astro/**/*",
+      ".dist/**/*",
+      // Ignore third-party UI kit files
+      "catalyst-ui-kit/**/*",
+    ],
   },
-  {
-    files: ["**/*.astro"],
-    plugins: {
-      astro: astroPlugin,
+  ...compat.config({
+    extends: [
+      "plugin:@typescript-eslint/recommended",
+      "plugin:astro/recommended",
+    ],
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+      project: "./tsconfig.json",
+      extraFileExtensions: [".astro"],
     },
-    languageOptions: {
-      parser: astroPlugin.parser,
-    },
-    rules: {
-      ...astroPlugin.configs.recommended.rules,
-    },
-  },
+    overrides: [
+      {
+        files: ["*.astro"],
+        parser: "astro-eslint-parser",
+        parserOptions: {
+          parser: "@typescript-eslint/parser",
+          extraFileExtensions: [".astro"],
+        },
+      },
+    ],
+  }),
 ];
