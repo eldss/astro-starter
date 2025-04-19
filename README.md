@@ -2,6 +2,52 @@
 
 A comprehensive starter template for building modern, performant websites with Astro. This template includes TypeScript, Tailwind CSS, Alpine.js, and testing setup with Vitest to help you get started quickly with best practices in place.
 
+## Using This Template
+
+### Option 1: Local Copy
+
+If you have the template locally:
+
+1. Copy the entire directory (including hidden files) to your new project location:
+   ```bash
+   # Using cp with the dot glob to include hidden files
+   # The "|| true" ensures the command doesn't fail on permission errors
+   cp -r astro-starter/. my-new-project 2>/dev/null || true
+   
+   # Or alternatively with rsync (handles permissions better)
+   rsync -av --exclude='.git/' astro-starter/ my-new-project/
+   
+   cd my-new-project
+   ```
+2. Reinitialize the git repository:
+   ```bash
+   rm -rf .git
+   git init
+   ```
+3. Update the project name and details in package.json
+4. Install dependencies with `pnpm install`
+5. Start developing with `pnpm dev`
+
+### Option 2: Clone from GitHub
+
+If you want to start from the GitHub repository:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/eldss/astro-starter.git my-new-project
+   cd my-new-project
+   ```
+2. Remove the existing git history and initialize a new repository:
+   ```bash
+   rm -rf .git
+   git init
+   ```
+3. Update the project name and details in package.json
+4. Install dependencies with `pnpm install`
+5. Start developing with `pnpm dev`
+
+This ensures your new project has its own git history separate from the template.
+
 ## Overview
 
 This starter template provides a solid foundation for building websites with Astro, focusing on performance, developer experience, and modern web standards. It includes:
